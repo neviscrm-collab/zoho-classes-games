@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Zoho Classes Games — Transform Learning into Play</title>
+<meta name="description" content="Engage students with AI-powered educational games that turn lessons into exciting competitions, quizzes, challenges, and interactive learning experiences."/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+/* ── Nav ── */
+.zc-nav{background:#fff;border-bottom:1px solid #e5e7eb;height:64px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.nav-demo{border:1.5px solid #111827;color:#111827;border-radius:6px;padding:8px 20px;font-size:13px;font-weight:600;transition:all .18s;white-space:nowrap;}
+.nav-demo:hover{background:#111827;color:#fff;}
+
+/* ── Hero ── */
+.hero-bg{
+  position:relative;min-height:660px;
+  background:#f7f3e8;
+  display:flex;align-items:flex-start;overflow:hidden;
+}
+/* Painterly background using CSS gradients + pseudo-elements */
+.hero-bg::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 75% 60%, rgba(120,90,30,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 90% 40%, rgba(80,60,20,.22) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 60% 90%, rgba(60,80,20,.25) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 85% 80%, rgba(50,70,10,.3) 0%, transparent 60%),
+    linear-gradient(180deg, #f0ead8 0%, #e8dfc5 30%, #d4c98a 60%, #a89840 80%, #7a7030 100%);
+}
+/* Fog/texture overlay */
+.hero-bg::after{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse 70% 50% at 70% 40%, rgba(255,255,255,.25) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 80% 70%, rgba(200,180,80,.15) 0%, transparent 50%);
+  mix-blend-mode:overlay;
+}
+
+/* ── Buttons ── */
+.btn-red{display:inline-flex;align-items:center;gap:8px;background:#e42527;color:#fff;border-radius:5px;padding:13px 26px;font-size:14px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;transition:background .18s,transform .1s;}
+.btn-red:hover{background:#c81e20;transform:translateY(-1px);}
+
+/* ── Feature pill tags (dark, hero bottom) ── */
+.hero-tag{background:#1a1a1a;color:#fff;border-radius:50px;padding:10px 22px;font-size:14px;font-weight:500;white-space:nowrap;}
+
+/* ── Section styles ── */
+.sec-white{background:#fff;}
+.sec-dark{background:#1c1c1c;color:#fff;}
+.sec-purple{background:#2e1065;color:#fff;}
+
+/* ── Browser/laptop mockup ── */
+.browser-frame{border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.22);border:1px solid #d1d5db;}
+.browser-bar{background:#2d2d2d;padding:10px 16px;display:flex;align-items:center;gap:8px;}
+.b-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.browser-addr{background:#3d3d3d;border-radius:4px;flex:1;padding:4px 12px;font-size:11px;color:#9ca3af;font-family:monospace;}
+
+.laptop-frame{background:#1a1a1a;border-radius:16px;padding:12px 12px 0;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.laptop-screen{background:#fff;border-radius:8px 8px 0 0;overflow:hidden;}
+.laptop-base{background:#2a2a2a;height:16px;border-radius:0 0 8px 8px;margin:0;}
+
+/* ── Feature card (white section, image+text) ── */
+.feat-card{background:#f5f4f2;border-radius:20px;overflow:hidden;}
+
+/* ── Scroll reveal ── */
+.sr{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s;}
+.sr.in{opacity:1;transform:none;}
+
+/* ── Sticky CTA ── */
+.sticky-btn{position:fixed;bottom:24px;right:24px;z-index:999;background:#e42527;color:#fff;border-radius:5px;padding:12px 22px;font-size:13px;font-weight:700;box-shadow:0 4px 20px rgba(228,37,39,.35);transition:background .18s;}
+.sticky-btn:hover{background:#c81e20;}
+
+/* ── Animations ── */
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.float{animation:float 4s ease-in-out infinite;}
+@keyframes spin{from{stroke-dashoffset:100;}to{stroke-dashoffset:0;}}
+.spin-anim{animation:spin 2s ease-in-out infinite alternate;}
+</style>
+</head>
+<body class="bg-white text-gray-900 overflow-x-hidden">
+
+<!-- ══════════════════════════════════════
+     NAV — exact Syllabus page format
+══════════════════════════════════════ -->
+<nav class="zc-nav px-8">
+  <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+    <!-- Zoho Classes logo — exact replica -->
+    <a href="https://www.zoho.com/classes/" class="flex items-center gap-2.5">
+      <div style="background:#fff;border:2px solid #e5e7eb;border-radius:10px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;">
+        <svg width="26" height="22" viewBox="0 0 26 22" fill="none">
+          <rect x="1" y="1" width="24" height="16" rx="4" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+          <path d="M5 7h16M5 11h10" stroke="#374151" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="19" cy="17" r="4" fill="#2563eb"/>
+          <path d="M17.5 17h3M19 15.5v3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="leading-tight">
+        <div class="text-[10px] text-gray-400 font-medium leading-none">Zoho</div>
+        <div class="text-[17px] font-bold text-gray-900 leading-tight">Classes</div>
+      </div>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#features" class="text-[14px] text-gray-600 font-medium hover:text-gray-900 flex items-center gap-1">Features <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      <a href="#cta" class="text-[14px] text-gray-600 font-medium hover:text-gray-900">Pricing</a>
+      <a href="#cta" class="text-[14px] text-gray-600 font-medium hover:text-gray-900">Contact Sales</a>
+    </div>
+
+    <a href="#cta" class="nav-demo">REQUEST A DEMO</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     HERO — Painterly bg + feature icon + heading + tags
+     (Exact Syllabus page format)
+══════════════════════════════════════ -->
+<section class="hero-bg">
+  <div class="relative z-10 max-w-7xl mx-auto px-8 pt-16 pb-0 w-full">
+
+    <!-- Feature icon + label (like Syllabus page) -->
+    <div class="flex items-center gap-3 mb-6">
+      <div style="background:#fbbf24;border-radius:10px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M12 3l2.5 7.5H22l-6.5 4.5 2.5 7.5L12 18l-6 4.5 2.5-7.5L3 10.5h7.5z" stroke="#78350f" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="text-[18px] font-semibold text-gray-900">Games</span>
+    </div>
+
+    <!-- Main heading — large black, no gradients -->
+    <h1 class="text-[clamp(42px,5.5vw,72px)] font-black text-gray-900 leading-[1.05] tracking-tight mb-6 max-w-3xl">
+      Transform Learning<br/>into Play
+    </h1>
+
+    <!-- Sub-headline -->
+    <p class="text-[18px] text-gray-600 leading-relaxed mb-10 max-w-2xl">
+      Give students an AI-powered competitive learning experience. Teachers launch games in seconds, while students engage through team battles, map challenges, and live competitions — all aligned to the curriculum.
+    </p>
+
+    <!-- Single CTA -->
+    <a href="#cta" class="btn-red mb-16 inline-flex">
+      GET STARTED NOW
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </a>
+
+    <!-- Bottom tags — dark pills exactly like Syllabus page -->
+    <div class="flex flex-wrap gap-3 pb-0 mt-auto">
+      <span class="hero-tag">AI Powered</span>
+      <span class="hero-tag">Multiplayer</span>
+      <span class="hero-tag">Real-Time Scoring</span>
+      <span class="hero-tag">Classroom Ready</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FEATURE 1 — White card: text left + browser screenshot right
+     (Like "Teach with AI Assistant")
+══════════════════════════════════════ -->
+<section class="sec-white py-20 px-8" id="features">
+  <div class="max-w-7xl mx-auto">
+    <div class="feat-card sr">
+      <div class="grid lg:grid-cols-2 gap-0">
+
+        <!-- Text left -->
+        <div class="p-12 flex flex-col justify-center">
+          <h2 class="text-[clamp(32px,3.5vw,50px)] font-black text-gray-900 leading-tight mb-6">Tug of War</h2>
+          <p class="text-[16px] text-gray-600 leading-relaxed mb-6">
+            Students answer questions correctly to pull their team toward victory. Every correct answer tugs the rope. Every mistake gives the opponent ground. The tension is real — and so is the learning.
+          </p>
+          <ul class="space-y-3 text-[15px] text-gray-600">
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>Two or more teams compete in real time</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>AI generates fresh curriculum-aligned questions every session</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>Live rope animation shows which team is winning</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>Teachers can pause, review answers, and moderate live</li>
+          </ul>
+          <p class="text-[15px] text-gray-600 mt-6 leading-relaxed">
+            Tug of War turns every classroom into a competitive arena where learning is the only way to win!
+          </p>
+        </div>
+
+        <!-- Browser screenshot right -->
+        <div class="p-8 flex items-center justify-center">
+          <div class="browser-frame w-full">
+            <div class="browser-bar">
+              <div class="b-dot bg-red-400"></div>
+              <div class="b-dot bg-amber-400"></div>
+              <div class="b-dot bg-green-400"></div>
+              <div class="browser-addr">web.zohoclassestest.com/games/tug-of-war</div>
+            </div>
+            <!-- TUG OF WAR — exact recreation of actual screenshot -->
+            <div style="background:#fff;font-family:'Inter',sans-serif;">
+              <!-- Top bar: game title + controls -->
+              <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:28px;height:28px;border-radius:8px;overflow:hidden;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:14px;">🪢</div>
+                  <span style="font-size:14px;font-weight:700;color:#111;">Tug of War</span>
+                </div>
+                <div style="display:flex;gap:6px;">
+                  <div style="width:28px;height:28px;border-radius:50%;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:12px;">🔊</div>
+                  <div style="width:28px;height:28px;border-radius:50%;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:12px;">🌙</div>
+                  <div style="border:1.5px solid #e5e7eb;border-radius:50px;padding:4px 12px;font-size:11px;font-weight:600;color:#374151;display:flex;align-items:center;gap:4px;">↗ Exit</div>
+                </div>
+              </div>
+              <!-- Score bar: Red 0 | Round 1 | 05:00 | 0 Blue -->
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e5e7eb;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:13px;font-weight:700;color:#ef4444;">Red Team</span>
+                  <div style="border:1.5px solid #e5e7eb;border-radius:50px;padding:4px 12px;display:flex;align-items:center;gap:4px;font-size:12px;"><span style="color:#f59e0b;">☆</span><span style="font-weight:700;color:#111;">0</span></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="border:1.5px solid #e5e7eb;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;color:#374151;">Round 1</div>
+                  <div style="border:1.5px solid #22c55e;border-radius:8px;padding:6px 14px;font-size:15px;font-weight:800;color:#16a34a;background:#f0fdf4;">05:00</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="border:1.5px solid #e5e7eb;border-radius:50px;padding:4px 12px;display:flex;align-items:center;gap:4px;font-size:12px;"><span style="font-weight:700;color:#111;">0</span><span style="color:#f59e0b;">☆</span></div>
+                  <span style="font-size:13px;font-weight:700;color:#3b82f6;">Blue Team</span>
+                </div>
+              </div>
+              <!-- Rope + characters + grass background -->
+              <div style="position:relative;height:120px;background:linear-gradient(180deg,#bfdbfe 0%,#dbeafe 40%,#86efac 65%,#166534 100%);overflow:hidden;">
+                <!-- Rope bar -->
+                <div style="position:absolute;top:28px;left:0;right:0;height:10px;display:flex;align-items:center;">
+                  <div style="flex:1;height:10px;background:#dc2626;border-radius:5px 0 0 5px;"></div>
+                  <!-- Diamond marker -->
+                  <div style="width:22px;height:22px;background:#fbbf24;border:2px solid #d97706;transform:rotate(45deg);box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0;"></div>
+                  <div style="flex:1;height:10px;background:#3b82f6;border-radius:0 5px 5px 0;"></div>
+                </div>
+                <!-- Rope texture dashes below -->
+                <div style="position:absolute;top:44px;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,#92400e 0px,#92400e 8px,#78350f 8px,#78350f 16px);opacity:.7;"></div>
+                <!-- Ground pole/flag -->
+                <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);width:3px;height:24px;background:#6b7280;"></div>
+                <div style="position:absolute;bottom:50px;left:50%;transform:translateX(-6px);width:14px;height:10px;background:#fff;border:1px solid #6b7280;"></div>
+                <!-- Red team figures -->
+                <div style="position:absolute;bottom:22px;left:30px;display:flex;gap:4px;">
+                  <div style="text-align:center;font-size:20px;">🧑</div>
+                  <div style="text-align:center;font-size:20px;">🧑</div>
+                  <div style="text-align:center;font-size:20px;">🧑</div>
+                </div>
+                <!-- Blue team figures -->
+                <div style="position:absolute;bottom:22px;right:30px;display:flex;gap:4px;">
+                  <div style="text-align:center;font-size:20px;">🧑</div>
+                  <div style="text-align:center;font-size:20px;">🧑</div>
+                  <div style="text-align:center;font-size:20px;">🧑</div>
+                </div>
+              </div>
+              <!-- Split question area -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;border-top:3px solid #e5e7eb;">
+                <!-- Red Team side -->
+                <div style="padding:14px 16px;border-right:1px solid #e5e7eb;">
+                  <div style="border:1.5px solid #fca5a5;border-radius:50px;padding:4px 14px;display:inline-block;margin-bottom:10px;">
+                    <span style="font-size:11px;font-weight:700;color:#ef4444;letter-spacing:1px;">RED TEAM</span>
+                  </div>
+                  <div style="font-size:13px;font-weight:700;color:#111;margin-bottom:4px;">What does AI stand for in computer science?</div>
+                  <div style="font-size:10px;color:#9ca3af;font-weight:600;letter-spacing:.5px;margin-bottom:10px;">FIRST TO ANSWER WINS!</div>
+                  <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="border:1.5px solid #fca5a5;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#ef4444;text-align:center;">Artificial Invention</div>
+                    <div style="border:1.5px solid #fca5a5;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#ef4444;text-align:center;">Artificial Intelligence</div>
+                    <div style="border:1.5px solid #fca5a5;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#ef4444;text-align:center;">Automatic Intelligence</div>
+                    <div style="border:1.5px solid #fca5a5;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#ef4444;text-align:center;">Artistic Intelligence</div>
+                  </div>
+                </div>
+                <!-- Blue Team side -->
+                <div style="padding:14px 16px;">
+                  <div style="border:1.5px solid #93c5fd;border-radius:50px;padding:4px 14px;display:inline-block;margin-bottom:10px;">
+                    <span style="font-size:11px;font-weight:700;color:#3b82f6;letter-spacing:1px;">BLUE TEAM</span>
+                  </div>
+                  <div style="font-size:13px;font-weight:700;color:#111;margin-bottom:4px;">What does AI stand for in computer science?</div>
+                  <div style="font-size:10px;color:#9ca3af;font-weight:600;letter-spacing:.5px;margin-bottom:10px;">FIRST TO ANSWER WINS!</div>
+                  <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="border:1.5px solid #93c5fd;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#3b82f6;text-align:center;">Artificial Invention</div>
+                    <div style="border:1.5px solid #93c5fd;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#3b82f6;text-align:center;">Artificial Intelligence</div>
+                    <div style="border:1.5px solid #93c5fd;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#3b82f6;text-align:center;">Automatic Intelligence</div>
+                    <div style="border:1.5px solid #93c5fd;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:#3b82f6;text-align:center;">Artistic Intelligence</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FEATURE 2 — Dark full-bleed: heading top + full-width laptop
+     (Like "Smart Lesson Planner")
+══════════════════════════════════════ -->
+<section class="sec-dark py-20 px-8 sr">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 mb-16">
+      <h2 class="text-[clamp(32px,3.5vw,50px)] font-black text-white leading-tight">Map Quest</h2>
+      <p class="text-[16px] text-gray-400 leading-relaxed self-center">
+        Challenge students to identify countries, cities, landmarks, and locations on an interactive world map. The closer the pin, the higher the score. Distance-based scoring makes every attempt count — and keeps students glued to the screen.
+      </p>
+    </div>
+    <!-- Full-width laptop mockup -->
+    <!-- Real Map Quest screenshot — actual game UI -->
+    <div class="sr" style="border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+      <img src="images/map-quest.png" alt="Map Quest Game — Zoho Classes" style="width:100%;display:block;border-radius:16px;"/>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ══════════════════════════════════════
+     FEATURE 4 — Dark full-bleed: text top + full-width laptop
+     (Periodic Table Quest)
+══════════════════════════════════════ -->
+<section class="sec-dark py-20 px-8 sr">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 mb-16">
+      <h2 class="text-[clamp(32px,3.5vw,50px)] font-black text-white leading-tight">Periodic Table Quest</h2>
+      <p class="text-[16px] text-gray-400 leading-relaxed self-center">
+        Master chemistry concepts through exciting classroom challenges. Students identify elements, atomic numbers, symbols, and properties in a competitive quiz format — turning the periodic table into a game board.
+      </p>
+    </div>
+    <!-- Full-width laptop -->
+    <div class="laptop-frame sr">
+      <div class="laptop-screen">
+        <!-- ATOMIC NUMBER GAME — exact recreation of actual screenshot -->
+        <div style="background:#f8fafc;font-family:'Inter',sans-serif;">
+          <!-- Top bar: title + controls -->
+          <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:15px;">⚗️</div>
+              <span style="font-size:14px;font-weight:700;color:#111;">Atomic Number</span>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <div style="width:28px;height:28px;border-radius:50%;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:12px;">🔊</div>
+              <div style="width:28px;height:28px;border-radius:50%;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:12px;">🌙</div>
+              <div style="border:1.5px solid #e5e7eb;border-radius:50px;padding:4px 12px;font-size:11px;font-weight:600;color:#374151;">← Back</div>
+            </div>
+          </div>
+          <!-- Stats header row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 3fr 1fr;gap:0;border-bottom:1px solid #e5e7eb;background:#fff;">
+            <div style="padding:12px 16px;border-right:1px solid #e5e7eb;"><div style="font-size:10px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">TIMER</div><div style="font-size:22px;font-weight:800;color:#111;">2:00</div></div>
+            <div style="padding:12px 16px;border-right:1px solid #e5e7eb;"><div style="font-size:10px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">SCORE</div><div style="font-size:22px;font-weight:800;color:#111;">0</div></div>
+            <div style="padding:12px 16px;border-right:1px solid #e5e7eb;"><div style="font-size:10px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">STREAK</div><div style="font-size:22px;font-weight:800;color:#111;">0</div></div>
+            <div style="padding:12px 16px;border-right:1px solid #e5e7eb;text-align:center;display:flex;align-items:center;justify-content:center;"><div style="font-size:15px;font-weight:800;color:#111;">Find Atomic # "51"</div><div style="font-size:11px;color:#6b7280;margin-top:2px;">QUESTIONS 1 OF 20</div></div>
+            <div style="padding:12px 16px;"><div style="font-size:10px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">HIGHEST SCORE</div><div style="font-size:22px;font-weight:800;color:#111;">0</div></div>
+          </div>
+          <div style="padding:16px 20px;background:#f8fafc;">
+            <!-- Full periodic table — exact color scheme from screenshot -->
+            <div style="background:#fff;border-radius:12px;padding:12px;border:1px solid #e5e7eb;">
+              <!-- The table uses a grid — 18 columns, 7 periods + 2 lanthanide/actinide rows -->
+              <style>
+                .pt-cell{padding:4px 2px;text-align:center;border-radius:5px;font-size:9px;font-weight:800;cursor:pointer;}
+                .pt-cell:hover{opacity:.8;transform:scale(1.1);}
+                .pt-alkali{background:#fecdd3;color:#9f1239;}
+                .pt-alkaline{background:#fde68a;color:#78350f;}
+                .pt-trans{background:#fef9c3;color:#78350f;}
+                .pt-post{background:#bbf7d0;color:#14532d;}
+                .pt-metalloid{background:#bae6fd;color:#075985;}
+                .pt-nonmetal{background:#e9d5ff;color:#6b21a8;}
+                .pt-halogen{background:#fbcfe8;color:#9d174d;}
+                .pt-noble{background:#dbeafe;color:#1e3a8a;}
+                .pt-lanthanide{background:#fce7f3;color:#831843;}
+                .pt-actinide{background:#fce7f3;color:#831843;}
+                .pt-grid{display:grid;grid-template-columns:repeat(18,1fr);gap:2px;margin-bottom:4px;}
+                .pt-empty{background:transparent;}
+              </style>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">H</div>
+                <div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div>
+                <div class="pt-cell pt-noble">He</div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">Li</div><div class="pt-cell pt-alkaline">Be</div>
+                <div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div>
+                <div class="pt-cell pt-metalloid">B</div><div class="pt-cell pt-nonmetal">C</div><div class="pt-cell pt-nonmetal">N</div><div class="pt-cell pt-nonmetal">O</div><div class="pt-cell pt-halogen">F</div><div class="pt-cell pt-noble">Ne</div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">Na</div><div class="pt-cell pt-alkaline">Mg</div>
+                <div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div><div class="pt-cell pt-empty"></div>
+                <div class="pt-cell pt-post">Al</div><div class="pt-cell pt-metalloid">Si</div><div class="pt-cell pt-nonmetal">P</div><div class="pt-cell pt-nonmetal">S</div><div class="pt-cell pt-halogen">Cl</div><div class="pt-cell pt-noble">Ar</div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">K</div><div class="pt-cell pt-alkaline">Ca</div>
+                <div class="pt-cell pt-trans">Sc</div><div class="pt-cell pt-trans">Ti</div><div class="pt-cell pt-trans">V</div><div class="pt-cell pt-trans">Cr</div><div class="pt-cell pt-trans">Mn</div><div class="pt-cell pt-trans">Fe</div><div class="pt-cell pt-trans">Co</div><div class="pt-cell pt-trans">Ni</div><div class="pt-cell pt-trans">Cu</div><div class="pt-cell pt-trans">Zn</div>
+                <div class="pt-cell pt-post">Ga</div><div class="pt-cell pt-metalloid">Ge</div><div class="pt-cell pt-metalloid">As</div><div class="pt-cell pt-nonmetal">Se</div><div class="pt-cell pt-halogen">Br</div><div class="pt-cell pt-noble">Kr</div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">Rb</div><div class="pt-cell pt-alkaline">Sr</div>
+                <div class="pt-cell pt-trans">Y</div><div class="pt-cell pt-trans">Zr</div><div class="pt-cell pt-trans">Nb</div><div class="pt-cell pt-trans">Mo</div><div class="pt-cell pt-trans">Tc</div><div class="pt-cell pt-trans">Ru</div><div class="pt-cell pt-trans">Rh</div><div class="pt-cell pt-trans">Pd</div><div class="pt-cell pt-trans">Ag</div><div class="pt-cell pt-trans">Cd</div>
+                <div class="pt-cell pt-post">In</div>
+                <!-- Sb = atomic 51 — highlighted as target -->
+                <div class="pt-cell pt-post">Sn</div>
+                <div style="padding:4px 2px;text-align:center;border-radius:5px;font-size:9px;font-weight:800;background:#4ade80;color:#14532d;border:2px solid #16a34a;box-shadow:0 0 6px rgba(74,222,128,.5);">Sb</div>
+                <div class="pt-cell pt-metalloid">Te</div><div class="pt-cell pt-halogen">I</div><div class="pt-cell pt-noble">Xe</div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">Cs</div><div class="pt-cell pt-alkaline">Ba</div>
+                <div class="pt-cell pt-empty"></div>
+                <div class="pt-cell pt-trans">Hf</div><div class="pt-cell pt-trans">Ta</div><div class="pt-cell pt-trans">W</div><div class="pt-cell pt-trans">Re</div><div class="pt-cell pt-trans">Os</div><div class="pt-cell pt-trans">Ir</div><div class="pt-cell pt-trans">Pt</div><div class="pt-cell pt-trans">Au</div><div class="pt-cell pt-trans">Hg</div>
+                <div class="pt-cell pt-post">Tl</div><div class="pt-cell pt-post">Pb</div><div class="pt-cell pt-post">Bi</div><div class="pt-cell pt-metalloid">Po</div><div class="pt-cell pt-halogen">At</div><div class="pt-cell pt-noble">Rn</div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-cell pt-alkali">Fr</div><div class="pt-cell pt-alkaline">Ra</div>
+                <div class="pt-cell pt-empty"></div>
+                <div class="pt-cell pt-trans">Rf</div><div class="pt-cell pt-trans">Db</div><div class="pt-cell pt-trans">Sg</div><div class="pt-cell pt-trans">Bh</div><div class="pt-cell pt-trans">Hs</div><div class="pt-cell pt-trans">Mt</div><div class="pt-cell pt-trans">Ds</div><div class="pt-cell pt-trans">Rg</div><div class="pt-cell pt-trans">Cn</div>
+                <div class="pt-cell pt-post">Nh</div><div class="pt-cell pt-post">Fl</div><div class="pt-cell pt-post">Mc</div><div class="pt-cell pt-post">Lv</div><div class="pt-cell pt-halogen">Ts</div><div class="pt-cell pt-noble">Og</div>
+              </div>
+              <div style="height:6px;"></div>
+              <!-- Lanthanides -->
+              <div style="display:grid;grid-template-columns:repeat(15,1fr);gap:2px;margin-left:calc(100%/18*2 + 4px);margin-bottom:2px;">
+                <div class="pt-cell pt-lanthanide">La</div><div class="pt-cell pt-lanthanide">Ce</div><div class="pt-cell pt-lanthanide">Pr</div><div class="pt-cell pt-lanthanide">Nd</div><div class="pt-cell pt-lanthanide">Pm</div><div class="pt-cell pt-lanthanide">Sm</div><div class="pt-cell pt-lanthanide">Eu</div><div class="pt-cell pt-lanthanide">Gd</div><div class="pt-cell pt-lanthanide">Tb</div><div class="pt-cell pt-lanthanide">Dy</div><div class="pt-cell pt-lanthanide">Ho</div><div class="pt-cell pt-lanthanide">Er</div><div class="pt-cell pt-lanthanide">Tm</div><div class="pt-cell pt-lanthanide">Yb</div><div class="pt-cell pt-lanthanide">Lu</div>
+              </div>
+              <!-- Actinides -->
+              <div style="display:grid;grid-template-columns:repeat(15,1fr);gap:2px;margin-left:calc(100%/18*2 + 4px);">
+                <div class="pt-cell pt-actinide">Ac</div><div class="pt-cell pt-actinide">Th</div><div class="pt-cell pt-actinide">Pa</div><div class="pt-cell pt-actinide">U</div><div class="pt-cell pt-actinide">Np</div><div class="pt-cell pt-actinide">Pu</div><div class="pt-cell pt-actinide">Am</div><div class="pt-cell pt-actinide">Cm</div><div class="pt-cell pt-actinide">Bk</div><div class="pt-cell pt-actinide">Cf</div><div class="pt-cell pt-actinide">Es</div><div class="pt-cell pt-actinide">Fm</div><div class="pt-cell pt-actinide">Md</div><div class="pt-cell pt-actinide">No</div><div class="pt-cell pt-actinide">Lr</div>
+              </div>
+            </div>
+          </div>
+            <!-- Periodic table grid (simplified) -->
+            <div style="background:#fff;border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid #e5e7eb;">
+              <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:8px;">Challenge: Identify the element with atomic number 11</div>
+              <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-bottom:10px;">
+                <!-- Period 1 -->
+                <div style="background:#fef2f2;border:2px solid #f59e0b;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#dc2626;">H</div><div style="font-size:8px;color:#6b7280;">1</div></div>
+                <div style="background:#f0f9ff;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#1e40af;">He</div><div style="font-size:8px;color:#6b7280;">2</div></div>
+                <!-- Period 2 -->
+                <div style="background:#f0fdf4;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#166534;">Li</div><div style="font-size:8px;color:#6b7280;">3</div></div>
+                <div style="background:#f0fdf4;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#166534;">Be</div><div style="font-size:8px;color:#6b7280;">4</div></div>
+                <div style="background:#fff7ed;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#9a3412;">B</div><div style="font-size:8px;color:#6b7280;">5</div></div>
+                <div style="background:#fff7ed;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#9a3412;">C</div><div style="font-size:8px;color:#6b7280;">6</div></div>
+                <div style="background:#fff7ed;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#9a3412;">N</div><div style="font-size:8px;color:#6b7280;">7</div></div>
+                <div style="background:#fff7ed;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#9a3412;">O</div><div style="font-size:8px;color:#6b7280;">8</div></div>
+                <div style="background:#fdf4ff;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#7e22ce;">F</div><div style="font-size:8px;color:#6b7280;">9</div></div>
+                <div style="background:#f0f9ff;border-radius:6px;padding:4px;text-align:center;"><div style="font-size:10px;font-weight:900;color:#1e40af;">Ne</div><div style="font-size:8px;color:#6b7280;">10</div></div>
+                <!-- Period 3 — Na highlighted -->
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FEATURE 5 — White card: text left + browser screenshot right
+     (Word Games + Live Quiz)
+══════════════════════════════════════ -->
+<section class="sec-white py-20 px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="feat-card sr">
+      <div class="grid lg:grid-cols-2 gap-0">
+        <!-- Text left -->
+        <div class="p-12 flex flex-col justify-center">
+          <h2 class="text-[clamp(32px,3.5vw,50px)] font-black text-gray-900 leading-tight mb-6">Live Quiz &amp;<br/>Word Games</h2>
+          <p class="text-[16px] text-gray-600 leading-relaxed mb-6">
+            Students answer timed MCQ questions with live scoring and a circular countdown timer. Every correct answer earns XP. Word Games add vocabulary challenges, unscramble races, and definition matching to build language skills.
+          </p>
+          <ul class="space-y-3 text-[15px] text-gray-600">
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>10 questions per session, 60 seconds per question</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>Circular countdown timer creates real urgency</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>XP and achievements awarded after every session</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>Full answer review with explanations at the end</li>
+            <li class="flex items-start gap-2"><span class="text-gray-400 mt-0.5">•</span>Word Games support MCQ, unscramble, and fill-in-the-blank</li>
+          </ul>
+          <p class="text-[15px] text-gray-600 mt-6 leading-relaxed">
+            From perfect scores to bronze badges — every session gives students something to celebrate and a reason to come back.
+          </p>
+        </div>
+        <!-- Browser screenshot right — MCQ screen from actual recording -->
+        <div class="p-8 flex items-center justify-center">
+          <div class="browser-frame w-full">
+            <div class="browser-bar">
+              <div class="b-dot bg-red-400"></div>
+              <div class="b-dot bg-amber-400"></div>
+              <div class="b-dot bg-green-400"></div>
+              <div class="browser-addr">web.zohoclassestest.com/games/word-completion</div>
+            </div>
+            <!-- WORD COMPLETION — exact recreation of actual screenshot -->
+            <div style="background:#f8fafc;display:flex;font-family:'Inter',sans-serif;">
+              <!-- Left stats panel — exact from screenshot -->
+              <div style="width:90px;display:flex;flex-direction:column;gap:0;flex-shrink:0;">
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:8px 4px 4px 8px;text-align:center;">
+                  <div style="font-size:9px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">TIME</div>
+                  <div style="font-size:22px;font-weight:900;color:#111;">25</div>
+                </div>
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:4px 4px 4px 8px;text-align:center;">
+                  <div style="font-size:9px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">SCORE</div>
+                  <div style="font-size:22px;font-weight:900;color:#111;">0</div>
+                </div>
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin:4px 4px 4px 8px;text-align:center;">
+                  <div style="font-size:9px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:2px;">QUESTION</div>
+                  <div style="font-size:16px;font-weight:900;color:#111;">1<span style="font-size:11px;color:#9ca3af;">/5</span></div>
+                </div>
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:4px 4px 4px 8px;text-align:center;">
+                  <div style="font-size:9px;color:#6b7280;font-weight:600;letter-spacing:.5px;margin-bottom:4px;">MISTAKES</div>
+                  <div style="font-size:22px;font-weight:900;color:#ef4444;">1</div>
+                </div>
+              </div>
+              <!-- Right main area -->
+              <div style="flex:1;padding:16px 14px 16px 10px;background:#fff;border-left:1px solid #e5e7eb;">
+                <!-- Player name pill -->
+                <div style="text-align:center;margin-bottom:14px;">
+                  <div style="background:#ede9fe;border-radius:50px;padding:6px 18px;display:inline-flex;align-items:center;gap:6px;">
+                    <span style="font-size:13px;">👤</span>
+                    <span style="font-size:13px;font-weight:700;color:#4f46e5;">Nevis</span>
+                  </div>
+                </div>
+                <!-- Difficulty + instruction -->
+                <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:14px;">
+                  <div style="border:1.5px solid #f59e0b;border-radius:50px;padding:4px 14px;font-size:11px;font-weight:700;color:#d97706;">MEDIUM</div>
+                  <span style="font-size:11px;font-weight:700;color:#374151;letter-spacing:.5px;">FILL IN THE MISSING LETTERS</span>
+                </div>
+                <!-- Question -->
+                <div style="text-align:center;font-size:14px;font-weight:700;color:#111;margin-bottom:16px;">A type of reasoning used in AI</div>
+                <!-- Letter tiles — L O G I _ -->
+                <div style="display:flex;gap:6px;justify-content:center;margin-bottom:10px;">
+                  <div style="width:44px;height:50px;border:2px solid #d1d5db;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#111;background:#fff;">L</div>
+                  <div style="width:44px;height:50px;border:2px solid #22c55e;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;background:#22c55e;">O</div>
+                  <div style="width:44px;height:50px;border:2px solid #d1d5db;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#111;background:#fff;">G</div>
+                  <div style="width:44px;height:50px;border:2px solid #d1d5db;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#111;background:#fff;">I</div>
+                  <div style="width:44px;height:50px;border:2px dashed #4f46e5;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#f8f7ff;"></div>
+                </div>
+                <!-- Mistake indicator -->
+                <div style="text-align:center;font-size:12px;font-weight:700;color:#ef4444;margin-bottom:14px;">1 mistake so far</div>
+                <!-- Tap the missing letter instruction -->
+                <div style="text-align:center;font-size:11px;font-weight:600;color:#6b7280;letter-spacing:.5px;margin-bottom:10px;">TAP THE MISSING LETTER</div>
+                <!-- Letter options -->
+                <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;">
+                  <div style="width:38px;height:42px;border:1.5px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#374151;background:#fff;">Z</div>
+                  <div style="width:38px;height:42px;border:1.5px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#374151;background:#fff;">M</div>
+                  <div style="width:38px;height:42px;border:1.5px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#374151;background:#fff;">C</div>
+                  <div style="width:38px;height:42px;border:1.5px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#374151;background:#fff;">S</div>
+                  <div style="width:38px;height:42px;border:1.5px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#374151;background:#fff;">O</div>
+                  <div style="width:38px;height:42px;border:1.5px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#374151;background:#fff;">Q</div>
+                  <div style="width:38px;height:42px;border:2px solid #4f46e5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#4f46e5;background:#ede9fe;">E</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FEATURE 6 — Dark full-bleed: Achievements + Perfect Score
+     (from actual recording)
+══════════════════════════════════════ -->
+<section class="sec-dark py-20 px-8 sr">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 mb-16">
+      <h2 class="text-[clamp(32px,3.5vw,50px)] font-black text-white leading-tight">Achievements &amp;<br/>XP Rewards</h2>
+      <p class="text-[16px] text-gray-400 leading-relaxed self-center">
+        Every session ends with a celebration. Perfect scores unlock achievement badges. XP points level students up from Learner to Scholar to Expert. The reward system makes students genuinely want to come back every day.
+      </p>
+    </div>
+    <!-- Full-width laptop showing achievements -->
+    <div class="laptop-frame sr">
+      <div class="laptop-screen">
+        <div style="background:#fff;padding:0;">
+          <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:8px 20px;display:flex;align-items:center;gap:20px;">
+            <div style="display:flex;align-items:center;gap:8px;"><svg width="20" height="16" viewBox="0 0 20 16" fill="none"><rect x="1" y="1" width="18" height="12" rx="3" stroke="#374151" stroke-width="1.5"/></svg><span style="font-size:13px;font-weight:700;">Zoho Classes</span></div>
+            <span style="font-size:12px;color:#6b7280;">Home</span><span style="font-size:12px;color:#2563eb;border-bottom:2px solid #2563eb;padding-bottom:2px;">Academics</span><span style="font-size:12px;color:#6b7280;">Games</span>
+          </div>
+          <div style="display:flex;height:400px;">
+            <!-- Session result panel left -->
+            <div style="flex:1;padding:24px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fafafa;">
+              <!-- Star (from recording) -->
+              <div style="width:72px;height:72px;background:linear-gradient(135deg,#f59e0b,#ef4444);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 8px 30px rgba(245,158,11,.4);">
+                <span style="font-size:32px;">⭐</span>
+              </div>
+              <div style="background:#fef9c3;border-radius:50px;padding:6px 18px;display:inline-block;margin-bottom:10px;">
+                <span style="font-size:13px;font-weight:800;color:#92400e;">⭐ Perfect Score!</span>
+              </div>
+              <div style="font-size:15px;font-weight:700;color:#6d28d9;margin-bottom:16px;max-width:280px;">Learning is a journey — you're making great progress! 🌟</div>
+              <div style="font-size:52px;font-weight:900;color:#6d28d9;line-height:1;">10 <span style="font-size:24px;color:#9ca3af;font-weight:400;">/ 10</span></div>
+              <div style="font-size:13px;color:#6b7280;margin-top:4px;">100% score · Completed in 3:52</div>
+              <div style="width:100%;height:6px;background:linear-gradient(90deg,#f59e0b,#ef4444);border-radius:3px;margin:14px 0;"></div>
+              <div style="display:flex;gap:10px;">
+                <div style="background:#6d28d9;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;color:#fff;">✓ Done</div>
+                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:10px 20px;font-size:13px;color:#374151;display:flex;align-items:center;gap:6px;">📋 Review Answers <span style="background:#ede9fe;border-radius:50px;padding:1px 8px;font-size:11px;color:#6d28d9;font-weight:700;">10/10</span></div>
+              </div>
+            </div>
+            <!-- Achievements panel right -->
+            <div style="flex:1;padding:24px;background:#fff;">
+              <div style="font-size:15px;font-weight:800;color:#111;margin-bottom:16px;">Rewards Earned</div>
+              <!-- Achievement from recording -->
+              <div style="background:#1a0840;border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:14px;">
+                <div style="background:linear-gradient(135deg,#92400e,#b45309);border-radius:10px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">🏃</div>
+                <div>
+                  <div style="font-size:10px;color:#f59e0b;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Achievement Unlocked!</div>
+                  <div style="font-size:15px;font-weight:800;color:#fff;">First Step</div>
+                  <div style="background:#78350f;border-radius:50px;padding:2px 10px;display:inline-block;margin-top:4px;"><span style="font-size:11px;color:#fcd34d;font-weight:700;">Bronze 🥉</span></div>
+                </div>
+              </div>
+              <!-- XP Level from recording -->
+              <div style="background:#f5f3ff;border-radius:14px;padding:14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="background:#6d28d9;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:800;color:#fff;">Lv2</span>
+                    <span style="font-size:14px;font-weight:700;color:#111;">Learner</span>
+                  </div>
+                  <span style="font-size:12px;color:#6b7280;">32 / 150 XP</span>
+                </div>
+                <div style="height:8px;background:#e5e7eb;border-radius:4px;">
+                  <div style="width:21%;height:8px;background:linear-gradient(90deg,#6d28d9,#c026d3);border-radius:4px;"></div>
+                </div>
+                <div style="font-size:11px;color:#6b7280;margin-top:4px;">Personal best! 🏆</div>
+              </div>
+              <!-- Badges grid -->
+              <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">Collected Badges</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <div style="background:#fef3c7;border-radius:8px;padding:5px 12px;font-size:12px;color:#92400e;font-weight:600;">🥇 Fast Learner</div>
+                <div style="background:#ede9fe;border-radius:8px;padding:5px 12px;font-size:12px;color:#6d28d9;font-weight:600;">⭐ Perfect Score</div>
+                <div style="background:#dcfce7;border-radius:8px;padding:5px 12px;font-size:12px;color:#166534;font-weight:600;">🗺️ Geography Master</div>
+                <div style="background:#fef2f2;border-radius:8px;padding:5px 12px;font-size:12px;color:#991b1b;font-weight:600;">⚗️ Chemistry Wizard</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ══════════════════════════════════════
+     FINAL CTA — matches Syllabus "Seize Control of Your Curriculum"
+══════════════════════════════════════ -->
+<section class="sec-white py-24 px-8 text-center" id="cta">
+  <div class="max-w-3xl mx-auto sr">
+    <h2 class="text-[clamp(34px,4vw,56px)] font-black text-gray-900 leading-tight mb-5">
+      Make Learning the Most<br/>Exciting Part of the Day
+    </h2>
+    <p class="text-[17px] text-gray-500 leading-relaxed mb-10 max-w-2xl mx-auto">
+      Empower teachers and inspire students with AI-powered educational games. Start your free trial — no credit card required.
+    </p>
+    <a href="#" class="btn-red">GET STARTED NOW →</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer style="background:#1c1c1c;border-top:1px solid #2d2d2d;" class="py-14 px-8 text-gray-500">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-5 gap-10 pb-10" style="border-bottom:1px solid #2d2d2d;">
+      <div class="md:col-span-2">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="background:#1a0840;border-radius:10px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect x="1" y="1" width="20" height="13" rx="3" stroke="#a78bfa" stroke-width="1.5"/><path d="M4 6h14M4 10h9" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div><span style="font-weight:800;color:#fff;font-size:16px;">Zoho</span><span style="color:#d1d5db;font-size:16px;"> Classes</span></div>
+        </div>
+        <p style="font-size:13px;line-height:1.7;margin-bottom:14px;">The complete AI-powered learning platform for schools, colleges, and coaching institutions.</p>
+      </div>
+      <div>
+        <div style="color:#fff;font-weight:600;font-size:13px;margin-bottom:14px;">Games</div>
+        <ul style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
+          <li><a href="#" class="hover:text-white transition-colors">Tug of War</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Map Quest</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Periodic Table Quest</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Word Games</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="color:#fff;font-weight:600;font-size:13px;margin-bottom:14px;">Features</div>
+        <ul style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
+          <li><a href="#" class="hover:text-white transition-colors">AI Generation</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Live Leaderboards</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">XP & Achievements</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Analytics</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="color:#fff;font-weight:600;font-size:13px;margin-bottom:14px;">Company</div>
+        <ul style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
+          <li><a href="#" class="hover:text-white transition-colors">About Zoho Classes</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Contact Sales</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;">
+      <span>© 2024 Zoho Corporation Pvt. Ltd. All rights reserved.</span>
+      <span style="background:#2d2d2d;border-radius:50px;padding:4px 14px;">🎮 Made for Students Who Love Learning</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#cta" class="sticky-btn">Get Started Now →</a>
+
+<script>
+const io = new IntersectionObserver(e => {
+  e.forEach(el => { if (el.isIntersecting) { el.target.classList.add('in'); io.unobserve(el.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.sr').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
